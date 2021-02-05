@@ -1,0 +1,7 @@
+{
+  "name": "mixerbot",
+  "description": "🤖 Discord Music Bot built with discord.js",
+  "repository": "https://github.com/govandpik/mixerbot",
+  "logo": "https://i.imgur.com/JFxgbWH.png",
+  "keywords": ["discord", "discordjs", "music", "bot"]
+}
