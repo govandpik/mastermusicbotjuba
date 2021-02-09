@@ -1,4 +1,3 @@
-
 const ytdl = require("erit-ytdl");
 const scdl = require("soundcloud-downloader").default;
 const { canModifyQueue, STAY_TIME } = require("../util/mixerbot");
@@ -81,13 +80,13 @@ module.exports = {
 
     try {
       var playingMessage = await queue.textChannel.send(`🎶 Started playing: **${song.title}** ${song.url}`);
-      await playingMessage.react("⏩");
+      await playingMessage.react("⏭");
       await playingMessage.react("⏯");
-      await playingMessage.react("🔕");
+      await playingMessage.react("🔇");
       await playingMessage.react("🔉");
       await playingMessage.react("🔊");
       await playingMessage.react("🔁");
-      await playingMessage.react("🛑");
+      await playingMessage.react("⏹");
     } catch (error) {
       console.error(error);
     }
@@ -102,7 +101,7 @@ module.exports = {
       const member = message.guild.member(user);
 
       switch (reaction.emoji.name) {
-        case "⏩":
+        case "⏭":
           queue.playing = true;
           reaction.users.remove(user).catch(console.error);
           if (!canModifyQueue(member)) return;
@@ -121,21 +120,21 @@ module.exports = {
           } else {
             queue.playing = !queue.playing;
             queue.connection.dispatcher.resume();
-            queue.textChannel.send(`${user} ▶️ resumed the music!`).catch(console.error);
+            queue.textChannel.send(`${user} ▶ resumed the music!`).catch(console.error);
           }
           break;
 
-        case "🔕":
+        case "🔇":
           reaction.users.remove(user).catch(console.error);
           if (!canModifyQueue(member)) return;
           if (queue.volume <= 0) {
             queue.volume = 100;
             queue.connection.dispatcher.setVolumeLogarithmic(100 / 100);
-            queue.textChannel.send(`${user} 🎚 unmuted the music!`).catch(console.error);
+            queue.textChannel.send(`${user} 🔊 unmuted the music!`).catch(console.error);
           } else {
             queue.volume = 0;
             queue.connection.dispatcher.setVolumeLogarithmic(0);
-            queue.textChannel.send(`${user} 🔕 muted the music!`).catch(console.error);
+            queue.textChannel.send(`${user} 🔇 muted the music!`).catch(console.error);
           }
           break;
 
@@ -150,29 +149,29 @@ module.exports = {
             .catch(console.error);
           break;
 
-        case "🎚":
+        case "🔊":
           reaction.users.remove(user).catch(console.error);
           if (!canModifyQueue(member) || queue.volume == 100) return;
           if (queue.volume + 10 >= 100) queue.volume = 100;
           else queue.volume = queue.volume + 10;
           queue.connection.dispatcher.setVolumeLogarithmic(queue.volume / 100);
           queue.textChannel
-            .send(`${user} 🎚 increased the volume, the volume is now ${queue.volume}%`)
+            .send(`${user} 🔊 increased the volume, the volume is now ${queue.volume}%`)
             .catch(console.error);
           break;
 
-        case "🔂":
+        case "🔁":
           reaction.users.remove(user).catch(console.error);
           if (!canModifyQueue(member)) return;
           queue.loop = !queue.loop;
           queue.textChannel.send(`Loop is now ${queue.loop ? "**on**" : "**off**"}`).catch(console.error);
           break;
 
-        case "🛑":
+        case "⏹":
           reaction.users.remove(user).catch(console.error);
           if (!canModifyQueue(member)) return;
           queue.songs = [];
-          queue.textChannel.send(`${user} 🛑 stopped the music!`).catch(console.error);
+          queue.textChannel.send(`${user} ⏹ stopped the music!`).catch(console.error);
           try {
             queue.connection.dispatcher.end();
           } catch (error) {
