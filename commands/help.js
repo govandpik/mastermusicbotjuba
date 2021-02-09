@@ -10,7 +10,6 @@ module.exports = {
 
     let helpEmbed = new MessageEmbed()
       .setTitle(`${message.client.user.username} Help`)
-      .setDescription(`[**invite**](https://discord.com/api/oauth2/authorize?client_id=797854395832336394&permissions=8&scope=bot) 📎
 `)
       .setColor("#F8AA2A");
 
