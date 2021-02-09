@@ -2,8 +2,8 @@
 const { MessageEmbed } = require("discord.js");
 
 module.exports = {
-  name: "helpppppp",
-  aliases: ["hhhhhh"],
+  name: "help",
+  aliases: ["h"],
   description: "Display all commands and descriptions",
   execute(message) {
     let commands = message.client.commands.array();
